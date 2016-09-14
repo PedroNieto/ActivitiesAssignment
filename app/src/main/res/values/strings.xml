@@ -15,6 +15,9 @@
         completions."
     </string>
 
+
+    <string name="username_key" translatable="false">username</string>
+
     <string name="title_activity_news">"Activity News"
     </string>
 

@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 public class NewsActivity extends AppCompatActivity {
 
+    private final int SIGN_IN_REQUEST_CODE = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,9 +41,8 @@ public class NewsActivity extends AppCompatActivity {
             NewsActivityFragment newsfragment = (NewsActivityFragment)
                     getSupportFragmentManager().findFragmentById(R.id.news_activity_fragment_id);
             Intent intent = new Intent(this, LoginActivity.class);
-            int requestCode = 0;
-            startActivityForResult(intent, requestCode);
-            Log.d("AAAAAAAAAAA", "Couldn't call aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA no receiving apps installed!");
+
+            startActivityForResult(intent, SIGN_IN_REQUEST_CODE);
             return true;
         }
 
@@ -49,12 +50,9 @@ public class NewsActivity extends AppCompatActivity {
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        Log.d("AAAAAAAAAAA", "Couldn't call aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA no receiving apps installed!");
         if (resultCode == Activity.RESULT_OK) {
-            Log.d("AAAAAAAAAAA", "Couldn't call aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA no receiving apps installed!");
-            if(requestCode == 0){
-                String resultData = data.getDataString();
-                Log.d("AAAAAAAAAAA", resultData);
+            if(requestCode == SIGN_IN_REQUEST_CODE){
+                String resultData = data.getExtras().getString("username");
 
                 TextView textView = (TextView) findViewById(R.id.loginStatusTextView);
                 textView.setText("User " + resultData + " logged in");
