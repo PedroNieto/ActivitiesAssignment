@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">ActivitiesAssignment</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Correo Electronico</string>
+    <!--TODO-->
+    <string name="prompt_password">Contrasenia(opcional)</string>
+    <string name="action_sign_in">Inicia Sesion o Registrate</string>
+    <string name="action_sign_in_short">Inicia Sesion</string>
+    <string name="action_sign_out">Cierra Sesion</string>
+    <string name="error_invalid_email">Esta direccion de correo es invalida</string>
+    <string name="error_invalid_password">Esta contrasenia es demaciado corta</string>
+    <string name="error_incorrect_password">Esta contrasenia es invalida</string>
+    <string name="error_field_required">Este campo es obligatorio</string>
+    <string name="permission_rationale">"Permisos de contactos son necesarios para proporcionar
+        completacion de correo."
+    </string>
+
+
+    <!--    <string name="username_key" translatable="false">username</string> -->
+
+    <string name="title_activity_news">"Lector de Reddit"
+    </string>
+
+
+</resources>
