@@ -52,6 +52,7 @@ public class NewsActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if (resultCode == Activity.RESULT_OK) {
             if(requestCode == SIGN_IN_REQUEST_CODE){
+//                String resultData = data.getExtras().getString(R.string.username_key);
                 String resultData = data.getExtras().getString("username");
 
                 TextView textView = (TextView) findViewById(R.id.loginStatusTextView);
