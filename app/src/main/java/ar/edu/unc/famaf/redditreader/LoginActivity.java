@@ -1,9 +1,8 @@
-package famaf.unc.edu.ar.activitiesassignment;
+package ar.edu.unc.famaf.redditreader;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
