@@ -20,6 +20,22 @@ public class NewsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_news);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        String categorie = "r/todayilearn";
+        String post = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec";
+        int timeOfPost = 4;
+        int ammountOfComments = 2112;
+
+        TextView textView = (TextView) findViewById(R.id.categoriesTextView);
+        textView.setText(categorie);
+
+        textView = (TextView) findViewById(R.id.postTextView);
+        textView.setText(post);
+        String timeText = getString(R.string.time_of_post, timeOfPost);
+        textView = (TextView) findViewById(R.id.timeOfPost);
+        textView.setText(timeText);
+        String commentsAmmountText = getString(R.string.comments_amounts, ammountOfComments);
+        textView = (TextView) findViewById(R.id.commentsAmountTextView);
+        textView.setText(commentsAmmountText);
     }
 
     @Override

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ActivitiesAssignment</string>
+    <string name="app_name">Lector de Reddit</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Correo Electronico</string>
@@ -21,6 +21,8 @@
 
     <string name="title_activity_news">"Lector de Reddit"
     </string>
+    <string name="time_of_post">Hace %1$dh</string>
+    <string name="comments_amounts">%1$d comentarios</string>
 
 
 </resources>

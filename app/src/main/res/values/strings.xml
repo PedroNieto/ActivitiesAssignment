@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ActivitiesAssignment</string>
+    <string name="app_name">Reddit Reader</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -20,6 +20,9 @@
 
     <string name="title_activity_news">"Reddit Reader"
     </string>
+    <string name="time_of_post">%1$dh ago</string>
+    <string name="comments_amounts">%1$d comments</string>
+
 
 
 </resources>
