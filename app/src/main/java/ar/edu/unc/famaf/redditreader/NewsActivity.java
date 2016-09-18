@@ -20,7 +20,7 @@ public class NewsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_news);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        String categorie = "r/todayilearn";
+        String categorie = "r/todayilearned";
         String post = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec";
         int timeOfPost = 4;
         int ammountOfComments = 2112;
@@ -65,11 +65,11 @@ public class NewsActivity extends AppCompatActivity {
         if (resultCode == Activity.RESULT_OK) {
             if(requestCode == SIGN_IN_REQUEST_CODE){
 //                String resultData = data.getExtras().getString(R.string.username_key);
-                String resultData = data.getExtras().getString("username");
+/*                String resultData = data.getExtras().getString("username");
 
                 TextView textView = (TextView) findViewById(R.id.loginStatusTextView);
                 textView.setText("User " + resultData + " logged in");
-            }
+ */           }
         }
     }
 }

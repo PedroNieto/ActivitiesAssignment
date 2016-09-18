@@ -10,78 +10,83 @@
     tools:context="ar.edu.unc.famaf.redditreader.NewsActivityFragment"
     tools:showIn="@layout/activity_news">
 
-    <!--                      principal, icono, texto. siguiente -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/reddit"/>
-        <!--Textos del medio-->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:orientation="horizontal"
-                android:layout_weight="1">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                     android:id="@+id/categoriesTextView"
-                    android:alingParentLeft="true"
-                    android:gravity="bottom|start"
-                    android:textSize="18sp" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/timeOfPost"
-                    android:gravity="bottom|end|"
-                    android:text="@string/time_of_post"
-                    android:textSize="18sp" />
-            </LinearLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1.5"
-                android:id="@+id/postTextView"
-                android:textSize="21.7sp"
-                android:gravity="center_vertical" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.5"
-                android:orientation="horizontal">
-                <ImageButton
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:src="@drawable/ic_mode_comment"
-                    android:background="@null" />
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="@string/comments_amounts"
-                    android:id="@+id/commentsAmountTextView" />
-            </LinearLayout>
-        </LinearLayout>
-        <ImageButton
-            android:layout_width="0dp"
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/reddit"
+        android:id="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="40dp" />
+    <!--Textos del medio-->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout"
+        android:layout_alignTop="@+id/imageView"
+        android:layout_toRightOf="@+id/imageView"
+        android:layout_toEndOf="@+id/imageView">
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_chevron_right"
+            android:id="@+id/categoriesTextView"
+            android:textSize="18sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/timeOfPost"
+            android:textSize="18sp"
+            android:layout_toRightOf="@+id/categoriesTextView"
+            android:layout_marginLeft="20dp" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/postTextView"
+        android:textSize="20sp"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_toRightOf="@+id/imageView"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/relativeLayout2"
+        android:layout_below="@+id/postTextView"
+        android:layout_toRightOf="@+id/imageView">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/commentsAmountTextView"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/commentsIcon"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_mode_comment"
             android:background="@null"
-            android:layout_marginTop="80dp"
-            android:layout_weight="0.45"
-            android:baselineAlignBottom="false"
-            android:layout_gravity="top" />
-    </LinearLayout>
+            android:id="@+id/commentsIcon"/>
+    </RelativeLayout>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_chevron_right"
+        android:background="@null"
+        android:id="@+id/imageButton"
+        android:layout_alignTop="@+id/postTextView"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="23dp" />
 
 </RelativeLayout>
