@@ -81,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_mode_comment"
-            android:background="@null"
+            android:background="?android:attr/selectableItemBackground"
             android:id="@+id/commentsIcon"
             tools:ignore="ContentDescription"/>
     </RelativeLayout>
@@ -90,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_chevron_right"
-        android:background="@null"
+        android:background="?android:attr/selectableItemBackground"
         android:id="@+id/imageButton"
         android:layout_alignTop="@+id/postTextView"
         android:layout_alignParentRight="true"
