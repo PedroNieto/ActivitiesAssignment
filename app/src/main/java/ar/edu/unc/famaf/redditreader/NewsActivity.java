@@ -1,6 +1,5 @@
 package ar.edu.unc.famaf.redditreader;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +19,8 @@ public class NewsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_news);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        /*No agrego estos strings a strings.xml por que es fake data que mas adelante se
+        * remplazara con datos reales*/
         String categorie = "r/todayilearned";
         String post = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec";
         int timeOfPost = 4;
@@ -50,26 +51,23 @@ public class NewsActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_sign_in) {
-            NewsActivityFragment newsfragment = (NewsActivityFragment)
-                    getSupportFragmentManager().findFragmentById(R.id.news_activity_fragment_id);
             Intent intent = new Intent(this, LoginActivity.class);
-
             startActivityForResult(intent, SIGN_IN_REQUEST_CODE);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+/*No se si deberia borrar esto*/
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if (resultCode == Activity.RESULT_OK) {
+/*        if (resultCode == Activity.RESULT_OK) {
             if(requestCode == SIGN_IN_REQUEST_CODE){
-//                String resultData = data.getExtras().getString(R.string.username_key);
-/*                String resultData = data.getExtras().getString("username");
+                String resultData = data.getExtras().getString(R.string.username_key);
+                String resultData = data.getExtras().getString("username");
 
                 TextView textView = (TextView) findViewById(R.id.loginStatusTextView);
                 textView.setText("User " + resultData + " logged in");
  */           }
-        }
-    }
 }
