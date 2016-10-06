@@ -8,4 +8,3 @@
         android:title="@string/action_sign_in"
         app:showAsAction="always|withText" />
 </menu>
-
