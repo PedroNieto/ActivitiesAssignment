@@ -45,11 +45,11 @@ public class Backend {
         post3.setPostCommentCount(1255);
         post4.setPostCommentCount(165332);
 
-        post0.setPostDate(new Date(1475791058));
-        post1.setPostDate(new Date(1475791058));
-        post2.setPostDate(new Date(1475791058));
-        post3.setPostDate(new Date(1475791058));
-        post4.setPostDate(new Date(1475791058));
+        post0.setPostDate(4);
+        post1.setPostDate(5);
+        post2.setPostDate(6);
+        post3.setPostDate(7);
+        post4.setPostDate(8);
 
         post0.setPostCategory("r/Categoria0");
         post1.setPostCategory("r/Categoria1");

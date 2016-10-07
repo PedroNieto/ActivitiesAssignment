@@ -1,15 +1,15 @@
 package ar.edu.unc.famaf.redditreader.model;
 
 
-import java.util.Date;
-
 public class PostModel {
     private String postTitle;
     private String postAuthor;
     private String postCategory;
-    private Date postDate;
+    private String postContent;
+    private int postDate;
     private int postCommentCount;
     private int postImageId;
+
 
 
     public void setPostTitle(String postTitle) {
@@ -24,7 +24,11 @@ public class PostModel {
         this.postCategory = postCategory;
     }
 
-    public void setPostDate(Date postDate) {
+    public void setPostContent(String postContent) {
+        this.postContent = postContent;
+    }
+
+    public void setPostDate(int postDate) {
         this.postDate = postDate;
     }
 
@@ -48,7 +52,11 @@ public class PostModel {
         return postCategory;
     }
 
-    public Date getPostDate() {
+    public String getPostContent() {
+        return postContent;
+    }
+
+    public int getPostDate() {
         return postDate;
     }
 
