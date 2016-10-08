@@ -51,12 +51,12 @@ public class Backend {
         post3.setPostDate(7);
         post4.setPostDate(8);
 
-        post0.setPostCategory("r/Categoria0");
+/*        post0.setPostCategory("r/Categoria0");
         post1.setPostCategory("r/Categoria1");
         post2.setPostCategory("r/Categoria2");
         post3.setPostCategory("r/Categoria3");
         post4.setPostCategory("r/Categoria4");
-
+*/
         post0.setPostImageId(R.drawable.reddit);
         post1.setPostImageId(R.drawable.reddit);
         post2.setPostImageId(R.drawable.reddit);

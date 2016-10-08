@@ -55,10 +55,15 @@ public class PostAdapter extends ArrayAdapter {
 
             postImagePreview.setImageResource(postModel.getPostImageId());
             postTitle.setText(postModel.getPostTitle());
-            postDate.setText(Resources.getSystem().getString(R.string.time_of_post, postModel.getPostDate()));
+//            postDate.setText(Resources.getSystem().getString(R.string.time_of_post, postModel.getPostDate()));
+            String time = getContext().getString(R.string.time_of_post, postModel.getPostDate());
+            postDate.setText(time);
             postAuthor.setText(postModel.getPostAuthor());
-            postCommentsCount.setText(postModel.getPostCommentCount());
+            String commentsCount = getContext().getString(R.string.comments_amounts, postModel.getPostCommentCount());
+//            postCommentsCount.setText(postModel.getPostCommentCount());
+
+            postCommentsCount.setText(commentsCount);
         }
-        return null;
+        return convertView;
     }
 }

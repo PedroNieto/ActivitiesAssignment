@@ -7,9 +7,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import ar.edu.unc.famaf.redditreader.R;
+import ar.edu.unc.famaf.redditreader.backend.Backend;
+import ar.edu.unc.famaf.redditreader.model.PostModel;
 
 public class NewsActivity extends AppCompatActivity {
 
@@ -21,24 +26,12 @@ public class NewsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_news);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        /*No agrego estos strings a strings.xml por que es fake data que mas adelante se
-        * remplazara con datos reales*/
-        String categorie = "r/todayilearned";
-        String post = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec";
-        int timeOfPost = 4;
-        int ammountOfComments = 2112;
+        List postLst= Backend.getInstance().getTopPosts();
 
-        TextView textView = (TextView) findViewById(R.id.categoriesTextView);
-        textView.setText(categorie);
 
-        textView = (TextView) findViewById(R.id.postTextView);
-        textView.setText(post);
-        String timeText = getString(R.string.time_of_post, timeOfPost);
-        textView = (TextView) findViewById(R.id.timeOfPost);
-        textView.setText(timeText);
-        String commentsAmmountText = getString(R.string.comments_amounts, ammountOfComments);
-        textView = (TextView) findViewById(R.id.commentsAmountTextView);
-        textView.setText(commentsAmmountText);
+        PostAdapter adapter = new PostAdapter(this, R.layout.item_post, postLst);
+        ListView postModelLV = (ListView) findViewById(R.id.post_list_view);
+        postModelLV.setAdapter(adapter);
     }
 
     @Override
