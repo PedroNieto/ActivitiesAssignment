@@ -1,6 +1,7 @@
 package ar.edu.unc.famaf.redditreader.ui;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,12 +45,19 @@ public class PostAdapter extends ArrayAdapter {
         PostModel postModel = postLst.get(position);
         if (postModel != null){
             ImageView postImagePreview = (ImageView) convertView.findViewById(R.id.postImageView);
-            TextView postCategory = (TextView) convertView.findViewById(R.id.postCategoriesTextView);
+//            TextView postCategory = (TextView) convertView.findViewById(R.id.postCategoriesTextView);
+            TextView postTitle = (TextView) convertView.findViewById(R.id.postCategoriesTextView); //TODO Asegurar que sea correcto
             TextView postDate = (TextView) convertView.findViewById(R.id.postDateTextView);
-            TextView postContent = (TextView) convertView.findViewById(R.id.postContentTextView);
+//            TextView postContent = (TextView) convertView.findViewById(R.id.postContentTextView);
+            TextView postAuthor = (TextView) convertView.findViewById(R.id.postContentTextView);
             TextView postCommentsCount = (TextView) convertView.findViewById(R.id.postCommentsCountTextView);
-            /*TODO
-             * title --- category?? cambiar donde corresponda Chequear que es cada campo */
+            /*TODO title --- category?? cambiar donde corresponda Chequear que es cada campo */
+
+            postImagePreview.setImageResource(postModel.getPostImageId());
+            postTitle.setText(postModel.getPostTitle());
+            postDate.setText(Resources.getSystem().getString(R.string.time_of_post, postModel.getPostDate()));
+            postAuthor.setText(postModel.getPostAuthor());
+            postCommentsCount.setText(postModel.getPostCommentCount());
         }
         return null;
     }
