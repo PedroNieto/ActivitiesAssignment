@@ -34,8 +34,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/postDateTextView"
             android:textSize="15sp"
-            android:layout_toRightOf="@+id/postCategoriesTextView"
-            android:layout_toEndOf="@+id/postCategoriesTextView"
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"/>
     </LinearLayout>
