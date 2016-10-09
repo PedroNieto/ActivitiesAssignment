@@ -76,7 +76,7 @@ public class PostAdapter extends ArrayAdapter {
             this.postImageView = postImageView;
             this.postCategoryTextView = postCategoryTextView;
             this.postDateTextView = postDateTextView;
-        cd An    this.postContentTextView = postContentTextView;
+            this.postContentTextView = postContentTextView;
             this.postCommentsCountTextView = postCommentsCountTextView;
         }
     }
