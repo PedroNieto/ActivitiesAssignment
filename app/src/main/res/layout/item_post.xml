@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-<!--        android:src="@drawable/reddit" TODO-->
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -26,7 +25,7 @@
             android:layout_width="0dp"
             android:layout_weight="4"
             android:layout_height="wrap_content"
-            android:id="@+id/postCategoriesTextView"
+            android:id="@+id/postTitleTextView"
             android:textSize="18sp"/>
         <TextView
             android:layout_width="0dp"
@@ -41,7 +40,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/postContentTextView"
+        android:id="@+id/postAuthorTextView"
         android:textSize="20sp"
         android:layout_below="@+id/relativeLayout"
         android:layout_toRightOf="@+id/postImageView"
@@ -54,7 +53,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/relativeLayout2"
-        android:layout_below="@+id/postContentTextView"
+        android:layout_below="@+id/postAuthorTextView"
         android:layout_toRightOf="@+id/postImageView"
         android:layout_toEndOf="@+id/postImageView">
 
@@ -84,7 +83,7 @@
         android:src="@drawable/ic_chevron_right"
         android:background="?android:attr/selectableItemBackground"
         android:id="@+id/imageButton"
-        android:layout_alignTop="@+id/postContentTextView"
+        android:layout_alignTop="@+id/postAuthorTextView"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="23dp"
