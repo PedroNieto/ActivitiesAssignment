@@ -2,8 +2,8 @@ package ar.edu.unc.famaf.redditreader.model;
 
 
 public class PostModel {
+    private String postSubReddit;
     private String postTitle;
-    private String postAuthor;
     private int postDate;
     private int postCommentCount;
     private int postImageId;
@@ -14,8 +14,8 @@ public class PostModel {
         this.postTitle = postTitle;
     }
 
-    public void setPostAuthor(String postAuthor) {
-        this.postAuthor = postAuthor;
+    public void setPostSubReddit(String postSubReddit) {
+        this.postSubReddit = postSubReddit;
     }
 
     public void setPostDate(int postDate) {
@@ -34,8 +34,8 @@ public class PostModel {
         return postTitle;
     }
 
-    public String getPostAuthor() {
-        return postAuthor;
+    public String getPostSubReddit() {
+        return postSubReddit;
     }
 
 

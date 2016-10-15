@@ -29,11 +29,11 @@ public class Backend {
         post3.setPostTitle("Titulo post3");
         post4.setPostTitle("Titulo post4");
 
-        post0.setPostAuthor("Autor post0");
-        post1.setPostAuthor("Autor post1");
-        post2.setPostAuthor("Autor post2");
-        post3.setPostAuthor("Autor post3");
-        post4.setPostAuthor("Autor post4");
+        post0.setPostSubReddit("Autor post0");
+        post1.setPostSubReddit("Autor post1");
+        post2.setPostSubReddit("Autor post2");
+        post3.setPostSubReddit("Autor post3");
+        post4.setPostSubReddit("Autor post4");
 
         post0.setPostCommentCount(12);
         post1.setPostCommentCount(123);
