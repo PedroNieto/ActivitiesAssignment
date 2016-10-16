@@ -81,8 +81,10 @@ public class PostAdapter extends ArrayAdapter{
                 Bitmap btm = cache.get(position);
                 if ( btm == null){
                     new ImageDownloader(viewHolder, position).execute(url);
+                }else{
+                    viewHolder.postImageView.setImageBitmap(btm);
                 }
-                viewHolder.postImageView.setImageBitmap(btm);
+
             }catch (MalformedURLException e){
                 e.printStackTrace();
             }
@@ -134,15 +136,18 @@ public class PostAdapter extends ArrayAdapter{
 
             } catch (IOException e) {
                 e.printStackTrace();
+                return null;
             }
             return bitmap;
         }
 
         @Override
         protected void onPostExecute(Bitmap result) {
-            viewHolder.postImageView.setImageBitmap(result);
-            cache.put(position,result);
-            viewHolder.progressBar.setVisibility(View.INVISIBLE);
+            if (result != null){
+                viewHolder.postImageView.setImageBitmap(result);
+                cache.put(position,result);
+                viewHolder.progressBar.setVisibility(View.INVISIBLE);
+            }
         }
 
     }
