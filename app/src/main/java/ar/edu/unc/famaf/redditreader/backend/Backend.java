@@ -47,11 +47,11 @@ public class Backend {
         post3.setPostDate(7);
         post4.setPostDate(8);
 
-        post0.setPostImageId(R.drawable.reddit);
-        post1.setPostImageId(R.drawable.reddit);
-        post2.setPostImageId(R.drawable.reddit);
-        post3.setPostImageId(R.drawable.reddit);
-        post4.setPostImageId(R.drawable.reddit);
+        post0.setPostImageURL("https://b.thumbs.redditmedia.com/yb1rWDJV1inD9Ana8lmFIs7yHEC1k4S-U8EAmxyZpdI.jpg");
+        post1.setPostImageURL("https://b.thumbs.redditmedia.com/vAwMfXd-hoT06bV8Oel0bCqVJbr12qjcNWhUDsEaluI.jpg");
+        post2.setPostImageURL("https://a.thumbs.redditmedia.com/DrNu91kJfDNOi_G7c5SGdxYjcG80Ipv5aUtOpw894a0.jpg");
+        post3.setPostImageURL("https://b.thumbs.redditmedia.com/PGTLSPspwOM8K5i0LYyS8KAGjvQ70gzgnOTR6vR2_7A.jpg");
+        post4.setPostImageURL("https://b.thumbs.redditmedia.com/uygVS8yz5vfWcRW_ldW5BjNfgi0hk6_9lsCo8LNDwao.jpg");
 
         List<PostModel> postModelList = new ArrayList<PostModel>();
         postModelList.add(post0);

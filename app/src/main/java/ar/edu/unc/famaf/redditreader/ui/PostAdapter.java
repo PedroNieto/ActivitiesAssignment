@@ -4,15 +4,19 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
@@ -25,10 +29,16 @@ import ar.edu.unc.famaf.redditreader.model.PostModel;
 
 public class PostAdapter extends ArrayAdapter{
     private List<PostModel> postLst;
+    LruCache<Integer, Bitmap> cache = new LruCache<>(512);
+    private final String LOG_TAG = "PostAdapter";
+
 
     public PostAdapter(Context context, int TextViewResourceId, List<PostModel> postLst){
         super(context,TextViewResourceId);
         this.postLst = postLst;
+    }
+    private Bitmap getImageView(Bitmap img){
+        return img;
     }
     @Override
     public int getCount(){
@@ -50,20 +60,33 @@ public class PostAdapter extends ArrayAdapter{
                                         (TextView) convertView.findViewById(R.id.postSubRedditTextView),
                                         (TextView) convertView.findViewById(R.id.postDateTextView),
                                         (TextView) convertView.findViewById(R.id.postTitleTextView),
-                                        (TextView) convertView.findViewById(R.id.postCommentsCountTextView));
+                                        (TextView) convertView.findViewById(R.id.postCommentsCountTextView),
+                                        (ProgressBar) convertView.findViewById(R.id.progresBar));
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         PostModel postModel = postLst.get(position);
+
         if (postModel != null){
-            viewHolder.postImageView.setImageResource(postModel.getPostImageId());
+            URL url = null;
             viewHolder.postSubRedditTextView.setText(postModel.getPostSubReddit());
             String time = getContext().getString(R.string.time_of_post, postModel.getPostDate());
             viewHolder.postDateTextView.setText(time);
             viewHolder.postTitleTextView.setText(postModel.getPostTitle());
             String commentsCount = getContext().getString(R.string.comments_amounts, postModel.getPostCommentCount());
             viewHolder.postCommentsCountTextView.setText(commentsCount);
+            try {
+                url = new URL(postModel.getPostImageURL());
+                Bitmap btm = cache.get(position);
+                if ( btm == null){
+                    new ImageDownloader(viewHolder, position).execute(url);
+                }
+                viewHolder.postImageView.setImageBitmap(btm);
+            }catch (MalformedURLException e){
+                e.printStackTrace();
+            }
+
          }
         return convertView;
     }
@@ -73,23 +96,37 @@ public class PostAdapter extends ArrayAdapter{
         public final TextView postDateTextView;
         public final TextView postTitleTextView;
         public final TextView postCommentsCountTextView;
+        public final ProgressBar progressBar;
         public ViewHolder(ImageView postImageView, TextView postSubRedditTextView,
                           TextView postDateTextView, TextView postTitleTextView,
-                          TextView postCommentsCountTextView){
+                          TextView postCommentsCountTextView, ProgressBar progressBar){
             this.postImageView = postImageView;
             this.postSubRedditTextView = postSubRedditTextView;
             this.postDateTextView = postDateTextView;
             this.postTitleTextView = postTitleTextView;
             this.postCommentsCountTextView = postCommentsCountTextView;
+            this.progressBar = progressBar;
         }
     }
 
     private class ImageDownloader extends AsyncTask<URL,Integer, Bitmap> {
+
+        private ViewHolder viewHolder;
+        private int position;
+        public ImageDownloader(ViewHolder viewHolder, int position){
+            this.viewHolder = viewHolder;
+            this.position = position;
+        }
+        @Override
+        protected void onPreExecute(){
+            viewHolder.progressBar.setVisibility(View.VISIBLE);
+        }
         @Override
         protected Bitmap doInBackground(URL... urls){
             URL url = urls[0];
             Bitmap bitmap = null;
             HttpsURLConnection connection =null;
+
             try{
                 connection = (HttpsURLConnection) url.openConnection();
                 InputStream is = connection.getInputStream();
@@ -100,5 +137,13 @@ public class PostAdapter extends ArrayAdapter{
             }
             return bitmap;
         }
+
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            viewHolder.postImageView.setImageBitmap(result);
+            cache.put(position,result);
+            viewHolder.progressBar.setVisibility(View.INVISIBLE);
+        }
+
     }
 }

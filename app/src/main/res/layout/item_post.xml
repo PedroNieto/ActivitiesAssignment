@@ -16,7 +16,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/relativeLayout"
+        android:id="@+id/linearLayout"
         android:layout_alignTop="@+id/postImageView"
         android:layout_toRightOf="@+id/postImageView"
         android:layout_toEndOf="@+id/postImageView"
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/postTitleTextView"
         android:textSize="20sp"
-        android:layout_below="@+id/relativeLayout"
+        android:layout_below="@+id/linearLayout"
         android:layout_toRightOf="@+id/postImageView"
         android:layout_toEndOf="@+id/postImageView"
         android:layout_marginEnd="25dp"
@@ -78,14 +78,36 @@
     </RelativeLayout>
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:src="@drawable/ic_chevron_right"
         android:background="?android:attr/selectableItemBackground"
         android:id="@+id/imageButton"
-        android:layout_alignTop="@+id/postTitleTextView"
+        android:layout_alignTop="@+id/linearLayout"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="23dp"
         tools:ignore="ContentDescription"/>
+
+    <ProgressBar
+        android:id="@+id/progresBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@android:style/Widget.ProgressBar.Small"
+        android:layout_centerHorizontal="true"
+        android:layout_alignLeft="@+id/postImageView"
+        android:layout_alignStart="@+id/postImageView"
+        android:layout_alignRight="@+id/postImageView"
+        android:layout_alignEnd="@+id/postImageView"
+        android:layout_alignBottom="@+id/postImageView"
+        android:layout_alignTop="@+id/postImageView"
+        android:foregroundGravity="center"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp" />
 </RelativeLayout>

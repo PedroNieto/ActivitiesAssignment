@@ -6,7 +6,7 @@ public class PostModel {
     private String postTitle;
     private int postDate;
     private int postCommentCount;
-    private int postImageId;
+    private String postImageURL;
 
 
 
@@ -26,8 +26,8 @@ public class PostModel {
         this.postCommentCount = postCommentCount;
     }
 
-    public void setPostImageId(int postImageId) {
-        this.postImageId = postImageId;
+    public void setPostImageURL(String postImageURL) {
+        this.postImageURL = postImageURL;
     }
 
     public String getPostTitle() {
@@ -47,7 +47,7 @@ public class PostModel {
         return postCommentCount;
     }
 
-    public int getPostImageId() {
-        return postImageId;
+    public String getPostImageURL() {
+        return postImageURL;
     }
 }
