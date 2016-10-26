@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
+import android.support.annotation.NonNull;
 import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,16 +29,12 @@ import ar.edu.unc.famaf.redditreader.model.PostModel;
 
 public class PostAdapter extends ArrayAdapter{
     private List<PostModel> postLst;
-    LruCache<Integer, Bitmap> cache = new LruCache<>(512);
-    private final String LOG_TAG = "PostAdapter";
+    private LruCache<Integer, Bitmap> cache = new LruCache<>(512);
 
 
-    public PostAdapter(Context context, int TextViewResourceId, List<PostModel> postLst){
+    PostAdapter(Context context, int TextViewResourceId, List<PostModel> postLst){
         super(context,TextViewResourceId);
         this.postLst = postLst;
-    }
-    private Bitmap getImageView(Bitmap img){
-        return img;
     }
     @Override
     public int getCount(){
@@ -50,12 +46,13 @@ public class PostAdapter extends ArrayAdapter{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent){
-        ViewHolder viewHolder = null;
+    @NonNull
+    public View getView(int position, View convertView, @NonNull ViewGroup parent){
+        ViewHolder viewHolder;
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater) getContext().
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.item_post, null);
+            convertView = inflater.inflate(R.layout.item_post, parent, false);
             viewHolder = new ViewHolder((ImageView) convertView.findViewById(R.id.postImageView),
                                         (TextView) convertView.findViewById(R.id.postSubRedditTextView),
                                         (TextView) convertView.findViewById(R.id.postDateTextView),
@@ -69,7 +66,7 @@ public class PostAdapter extends ArrayAdapter{
         PostModel postModel = postLst.get(position);
 
         if (postModel != null){
-            URL url = null;
+            URL url;
             viewHolder.postSubRedditTextView.setText(postModel.getPostSubReddit());
             String time = getContext().getString(R.string.time_of_post, postModel.getPostDate());
             viewHolder.postDateTextView.setText(time);
@@ -93,13 +90,13 @@ public class PostAdapter extends ArrayAdapter{
         return convertView;
     }
     private class ViewHolder {
-        public final ImageView postImageView;
-        public final TextView postSubRedditTextView;
-        public final TextView postDateTextView;
-        public final TextView postTitleTextView;
-        public final TextView postCommentsCountTextView;
-        public final ProgressBar progressBar;
-        public ViewHolder(ImageView postImageView, TextView postSubRedditTextView,
+        final ImageView postImageView;
+        final TextView postSubRedditTextView;
+        final TextView postDateTextView;
+        final TextView postTitleTextView;
+        final TextView postCommentsCountTextView;
+        final ProgressBar progressBar;
+        ViewHolder(ImageView postImageView, TextView postSubRedditTextView,
                           TextView postDateTextView, TextView postTitleTextView,
                           TextView postCommentsCountTextView, ProgressBar progressBar){
             this.postImageView = postImageView;
@@ -115,7 +112,7 @@ public class PostAdapter extends ArrayAdapter{
 
         private ViewHolder viewHolder;
         private int position;
-        public ImageDownloader(ViewHolder viewHolder, int position){
+        ImageDownloader(ViewHolder viewHolder, int position){
             this.viewHolder = viewHolder;
             this.position = position;
         }
@@ -126,8 +123,8 @@ public class PostAdapter extends ArrayAdapter{
         @Override
         protected Bitmap doInBackground(URL... urls){
             URL url = urls[0];
-            Bitmap bitmap = null;
-            HttpsURLConnection connection =null;
+            Bitmap bitmap;
+            HttpsURLConnection connection;
 
             try{
                 connection = (HttpsURLConnection) url.openConnection();

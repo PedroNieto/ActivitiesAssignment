@@ -15,10 +15,7 @@
         completions."
     </string>
 
-
-<!--    <string name="username_key" translatable="false">username</string> -->
-
-    <string name="title_activity_news">"Reddit Reader"
+    <string name="title_activity_news">Reddit Reader
     </string>
     <string name="time_of_post">%1$dh ago</string>
     <string name="comments_amounts">%1$d comments</string>
