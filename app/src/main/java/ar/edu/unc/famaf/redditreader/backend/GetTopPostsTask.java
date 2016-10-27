@@ -16,8 +16,12 @@ import ar.edu.unc.famaf.redditreader.ui.PostAdapter;
  * Created by pedro on 25/10/16.
  */
 
-public class GetTopPostsTask extends AsyncTask<URL, Integer, List<PostModel>>{
+public class    GetTopPostsTask extends AsyncTask<URL, Integer, List<PostModel>>{
+    private List<PostModel> postList;
 
+    public List<PostModel> getPostList(){
+        return this.postList;
+    }
     @Override
     protected List<PostModel> doInBackground(URL... urls) {
         List<PostModel> list = null;
@@ -31,5 +35,17 @@ public class GetTopPostsTask extends AsyncTask<URL, Integer, List<PostModel>>{
             e.printStackTrace();
         }
         return list;
+
+    }
+
+    @Override
+    protected void onPostExecute(List<PostModel> postModels) {
+
+        super.onPostExecute(postModels);
+
+        this.postList = postModels;
+
+
+
     }
 }

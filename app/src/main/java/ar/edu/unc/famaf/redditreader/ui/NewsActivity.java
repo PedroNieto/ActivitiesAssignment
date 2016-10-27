@@ -28,7 +28,6 @@ public class NewsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         List postLst= Backend.getInstance().getTopPosts();
 
-
         PostAdapter adapter = new PostAdapter(this, R.layout.item_post, postLst);
         ListView postModelLV = (ListView) findViewById(R.id.post_list_view);
         postModelLV.setAdapter(adapter);
