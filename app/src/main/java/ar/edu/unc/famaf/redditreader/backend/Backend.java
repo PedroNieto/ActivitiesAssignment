@@ -19,17 +19,15 @@ public class Backend {
     }
 
     public List<PostModel> getTopPosts() {
-        List<PostModel> postModelList = null;
+        List<PostModel> postModelList = new ArrayList<PostModel>();
         URL url = null;
         try {
             url = new URL("https://www.reddit.com/r/all/top/.json?limit=50");
         }catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        GetTopPostsTask postsTask = new GetTopPostsTask();
+        GetTopPostsTask postsTask = new GetTopPostsTask(postModelList);
         postsTask.execute(url);
-
-        postModelList = postsTask.getPostList();
 
 
         return postModelList;

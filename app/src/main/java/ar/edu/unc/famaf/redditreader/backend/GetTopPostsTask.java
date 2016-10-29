@@ -19,9 +19,10 @@ import ar.edu.unc.famaf.redditreader.ui.PostAdapter;
 public class    GetTopPostsTask extends AsyncTask<URL, Integer, List<PostModel>>{
     private List<PostModel> postList;
 
-    public List<PostModel> getPostList(){
-        return this.postList;
+    GetTopPostsTask(List<PostModel> list){
+        postList=list;
     }
+
     @Override
     protected List<PostModel> doInBackground(URL... urls) {
         List<PostModel> list = null;
@@ -32,7 +33,9 @@ public class    GetTopPostsTask extends AsyncTask<URL, Integer, List<PostModel>>
             Parser parser= new Parser();
             list = parser.readJsonStream(in);
         } catch (IOException e) {
+
             e.printStackTrace();
+            System.out.print("\n\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n\n" );
         }
         return list;
 
@@ -40,12 +43,9 @@ public class    GetTopPostsTask extends AsyncTask<URL, Integer, List<PostModel>>
 
     @Override
     protected void onPostExecute(List<PostModel> postModels) {
-
         super.onPostExecute(postModels);
-
-        this.postList = postModels;
-
-
-
+        if (postModels != null) {
+            this.postList.addAll(postModels);
+        }
     }
 }
