@@ -10,6 +10,7 @@ import java.util.List;
 import javax.net.ssl.HttpsURLConnection;
 
 import ar.edu.unc.famaf.redditreader.model.PostModel;
+import ar.edu.unc.famaf.redditreader.ui.OnTaskCompleted;
 import ar.edu.unc.famaf.redditreader.ui.PostAdapter;
 
 /**
@@ -17,12 +18,11 @@ import ar.edu.unc.famaf.redditreader.ui.PostAdapter;
  */
 
 public class    GetTopPostsTask extends AsyncTask<URL, Integer, List<PostModel>>{
-    private List<PostModel> postList;
+    private OnTaskCompleted listener;
 
-    GetTopPostsTask(List<PostModel> list){
-        postList=list;
+    GetTopPostsTask(OnTaskCompleted listener){
+        this.listener = listener;
     }
-
     @Override
     protected List<PostModel> doInBackground(URL... urls) {
         List<PostModel> list = null;
@@ -33,9 +33,7 @@ public class    GetTopPostsTask extends AsyncTask<URL, Integer, List<PostModel>>
             Parser parser= new Parser();
             list = parser.readJsonStream(in);
         } catch (IOException e) {
-
             e.printStackTrace();
-            System.out.print("\n\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n\n" );
         }
         return list;
 
@@ -44,8 +42,6 @@ public class    GetTopPostsTask extends AsyncTask<URL, Integer, List<PostModel>>
     @Override
     protected void onPostExecute(List<PostModel> postModels) {
         super.onPostExecute(postModels);
-        if (postModels != null) {
-            this.postList.addAll(postModels);
-        }
+        listener.onTaskCompleted(postModels);
     }
 }

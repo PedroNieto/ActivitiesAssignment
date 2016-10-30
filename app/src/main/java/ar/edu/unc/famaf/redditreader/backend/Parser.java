@@ -106,30 +106,9 @@ public class Parser {
             }
         }
         reader.endObject();
-        System.out.print("\n\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" + postSubReddit + postTitle + "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n\n" );
         postModel = new PostModel(postSubReddit, postTitle, postDate, postCommentCount, postImageURL);
 
         return postModel;
     }
 }
 
-
-
-/*
-while (Oreader.hasNext()){
-        String name = Oreader.nextName();
-        if(name.equals("subreddit")){
-        postSubReddit = Oreader.nextString();
-        } else if (name.equals("title")){
-        postTitle = Oreader.nextString();
-        } else if (name.equals("created")){
-        postDate = Oreader.nextInt();
-        } else if (name.equals("num_comments")){
-        postCommentCount = Oreader.nextInt();
-        } else if (name.equals("thumbnail")) {
-        postImageURL = Oreader.nextString();
-        } else {
-        reader.skipValue();
-        }
-        }
-*/

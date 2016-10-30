@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -66,7 +67,7 @@ public class PostAdapter extends ArrayAdapter{
         PostModel postModel = postLst.get(position);
 
         if (postModel != null){
-            URL url;
+            URL url = null;
             viewHolder.postSubRedditTextView.setText(postModel.getPostSubReddit());
             String time = getContext().getString(R.string.time_of_post, postModel.getPostDate());
             viewHolder.postDateTextView.setText(time);
@@ -74,7 +75,14 @@ public class PostAdapter extends ArrayAdapter{
             String commentsCount = getContext().getString(R.string.comments_amounts, postModel.getPostCommentCount());
             viewHolder.postCommentsCountTextView.setText(commentsCount);
             try {
-                url = new URL(postModel.getPostImageURL());
+                if (!postModel.getPostImageURL().equals("default") &&
+                        !postModel.getPostImageURL().equals("link") &&
+                        !postModel.getPostImageURL().equals("self") &&
+                        !postModel.getPostImageURL().equals("image")) {
+                    url = new URL(postModel.getPostImageURL());
+                }else{
+                    url = new URL("https://www.gravatar.com/avatar/72c87606e44fb8f9f7c42c3cb4db245d?s=32&d=identicon&r=PG");
+                }
                 Bitmap btm = cache.get(position);
                 if ( btm == null){
                     new ImageDownloader(viewHolder, position).execute(url);
@@ -124,10 +132,10 @@ public class PostAdapter extends ArrayAdapter{
         protected Bitmap doInBackground(URL... urls){
             URL url = urls[0];
             Bitmap bitmap;
-            HttpsURLConnection connection;
+            HttpURLConnection connection;
 
             try{
-                connection = (HttpsURLConnection) url.openConnection();
+                connection = (HttpURLConnection) url.openConnection();
                 InputStream is = connection.getInputStream();
                 bitmap = BitmapFactory.decodeStream(is,null, null);
 

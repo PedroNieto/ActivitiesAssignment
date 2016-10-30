@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -16,21 +17,17 @@ import ar.edu.unc.famaf.redditreader.R;
 import ar.edu.unc.famaf.redditreader.backend.Backend;
 import ar.edu.unc.famaf.redditreader.model.PostModel;
 
-public class NewsActivity extends AppCompatActivity {
+public class NewsActivity extends AppCompatActivity implements OnTaskCompleted{
 
     private final int SIGN_IN_REQUEST_CODE = 0;
-
+    private PostAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        List postLst= Backend.getInstance().getTopPosts();
-
-        PostAdapter adapter = new PostAdapter(this, R.layout.item_post, postLst);
-        ListView postModelLV = (ListView) findViewById(R.id.post_list_view);
-        postModelLV.setAdapter(adapter);
+        Backend.getInstance().getTopPosts(NewsActivity.this);
     }
 
     @Override
@@ -63,4 +60,13 @@ public class NewsActivity extends AppCompatActivity {
                 TextView textView = (TextView) findViewById(R.id.loginStatusTextView);
                 textView.setText("User " + resultData + " logged in");
  */           }
+    public void onTaskCompleted(List<PostModel> result){
+        if (result != null) {
+            this.adapter = new PostAdapter(this, R.layout.item_post, result);
+            ListView postModelLV = (ListView) findViewById(R.id.post_list_view);
+            postModelLV.setAdapter(adapter);
+        }else{
+            Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
