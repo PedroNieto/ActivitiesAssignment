@@ -29,6 +29,10 @@ import ar.edu.unc.famaf.redditreader.model.PostModel;
 
 
 public class PostAdapter extends ArrayAdapter{
+    private static final int MINUTE_IN_SEC = 60;
+    private static final int HOUR_IN_SEC = 3600;
+    private static final int DAY_IN_SEC = 86400;
+    private static final int MONTH_IN_SEC = 2592000;
     private List<PostModel> postLst;
     private LruCache<Integer, Bitmap> cache = new LruCache<>(512);
 
@@ -69,7 +73,9 @@ public class PostAdapter extends ArrayAdapter{
         if (postModel != null){
             URL url = null;
             viewHolder.postSubRedditTextView.setText(postModel.getPostSubReddit());
-            String time = getContext().getString(R.string.time_of_post, postModel.getPostDate());
+            String time =formatTime(postModel.getPostDate());
+            System.out.print("\n"+time+" \n");
+
             viewHolder.postDateTextView.setText(time);
             viewHolder.postTitleTextView.setText(postModel.getPostTitle());
             String commentsCount = getContext().getString(R.string.comments_amounts, postModel.getPostCommentCount());
@@ -80,14 +86,15 @@ public class PostAdapter extends ArrayAdapter{
                         !postModel.getPostImageURL().equals("self") &&
                         !postModel.getPostImageURL().equals("image")) {
                     url = new URL(postModel.getPostImageURL());
+                    Bitmap btm = cache.get(position);
+                    if ( btm == null){
+                        new ImageDownloader(viewHolder, position).execute(url);
+                    }else{
+                        viewHolder.postImageView.setImageBitmap(btm);
+                    }
+
                 }else{
-                    url = new URL("https://www.gravatar.com/avatar/72c87606e44fb8f9f7c42c3cb4db245d?s=32&d=identicon&r=PG");
-                }
-                Bitmap btm = cache.get(position);
-                if ( btm == null){
-                    new ImageDownloader(viewHolder, position).execute(url);
-                }else{
-                    viewHolder.postImageView.setImageBitmap(btm);
+                    viewHolder.postImageView.setImageResource(R.drawable.reddit);
                 }
 
             }catch (MalformedURLException e){
@@ -97,6 +104,25 @@ public class PostAdapter extends ArrayAdapter{
          }
         return convertView;
     }
+
+    private String formatTime(int postDate) {
+        long now = System.currentTimeMillis()/1000;
+        System.out.print("\n"+now+" "+postDate+ "\n");
+        long duration = now-postDate;
+        if(duration < MINUTE_IN_SEC){
+            return getContext().getString(R.string.time_of_post_seconds);
+        }else if (duration < HOUR_IN_SEC) {
+            return getContext().getString(R.string.time_of_post_minutes, duration/60);
+        }else if (duration < DAY_IN_SEC) {
+            return getContext().getString(R.string.time_of_post_hours, duration/3600);
+        }else if (duration < MONTH_IN_SEC){
+            return getContext().getString(R.string.time_of_post_days, duration/86400);
+        }else {
+            return getContext().getString(R.string.time_of_post_more);
+        }
+
+    }
+
     private class ViewHolder {
         final ImageView postImageView;
         final TextView postSubRedditTextView;

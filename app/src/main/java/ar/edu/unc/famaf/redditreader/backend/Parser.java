@@ -95,7 +95,7 @@ public class Parser {
                 postSubReddit = reader.nextString();
             } else if (name.equals("title")){
                 postTitle = reader.nextString();
-            } else if (name.equals("created")){
+            } else if (name.equals("created_utc")){
                 postDate = reader.nextInt();
             } else if (name.equals("num_comments")){
                 postCommentCount = reader.nextInt();

@@ -21,8 +21,12 @@
 
     <string name="title_activity_news">"Lector de Reddit"
     </string>
-    <string name="time_of_post">Hace %1$dh</string>
-    <string name="comments_amounts">%1$d comentarios</string>
 
+    <string name="comments_amounts">%1$d comentarios</string>
+    <string name="time_of_post_seconds">Hace un momento</string>
+    <string name="time_of_post_minutes">Hace %1$dmin</string>
+    <string name="time_of_post_hours">Hace %1$dh</string>
+    <string name="time_of_post_days">Hace %1$d dias</string>
+    <string name="time_of_post_more">Hace mucho tiempo</string>
 
 </resources>

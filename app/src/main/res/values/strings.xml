@@ -17,9 +17,12 @@
 
     <string name="title_activity_news">Reddit Reader
     </string>
-    <string name="time_of_post">%1$dh ago</string>
+
     <string name="comments_amounts">%1$d comments</string>
-
-
+    <string name="time_of_post_seconds">a moment ago</string>
+    <string name="time_of_post_minutes">%1$dmin ago</string>
+    <string name="time_of_post_hours">%1$dh ago</string>
+    <string name="time_of_post_days">%1$ddays ago</string>
+    <string name="time_of_post_more">Long time ago</string>
 
 </resources>
