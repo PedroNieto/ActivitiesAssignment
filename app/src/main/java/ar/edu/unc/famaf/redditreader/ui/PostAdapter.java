@@ -21,7 +21,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
-import javax.net.ssl.HttpsURLConnection;
 
 import ar.edu.unc.famaf.redditreader.R;
 import ar.edu.unc.famaf.redditreader.model.PostModel;
@@ -71,20 +70,16 @@ public class PostAdapter extends ArrayAdapter{
         PostModel postModel = postLst.get(position);
 
         if (postModel != null){
-            URL url = null;
+            URL url;
             viewHolder.postSubRedditTextView.setText(postModel.getPostSubReddit());
             String time =formatTime(postModel.getPostDate());
-            System.out.print("\n"+time+" \n");
 
             viewHolder.postDateTextView.setText(time);
             viewHolder.postTitleTextView.setText(postModel.getPostTitle());
             String commentsCount = getContext().getString(R.string.comments_amounts, postModel.getPostCommentCount());
             viewHolder.postCommentsCountTextView.setText(commentsCount);
             try {
-                if (!postModel.getPostImageURL().equals("default") &&
-                        !postModel.getPostImageURL().equals("link") &&
-                        !postModel.getPostImageURL().equals("self") &&
-                        !postModel.getPostImageURL().equals("image")) {
+                if (postModel.getPostImageURL().startsWith("http")) {
                     url = new URL(postModel.getPostImageURL());
                     Bitmap btm = cache.get(position);
                     if ( btm == null){
@@ -95,6 +90,7 @@ public class PostAdapter extends ArrayAdapter{
 
                 }else{
                     viewHolder.postImageView.setImageResource(R.drawable.reddit);
+                    viewHolder.progressBar.setVisibility(View.INVISIBLE);
                 }
 
             }catch (MalformedURLException e){
@@ -107,7 +103,6 @@ public class PostAdapter extends ArrayAdapter{
 
     private String formatTime(int postDate) {
         long now = System.currentTimeMillis()/1000;
-        System.out.print("\n"+now+" "+postDate+ "\n");
         long duration = now-postDate;
         if(duration < MINUTE_IN_SEC){
             return getContext().getString(R.string.time_of_post_seconds);

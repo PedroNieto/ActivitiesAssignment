@@ -8,13 +8,6 @@ public class PostModel {
     private int postCommentCount;
     private String postImageURL;
 
-    public PostModel(String postSubReddit, String postTitle, int postDate, int postCommentCount, String postImageURL){
-        this.postSubReddit = postSubReddit;
-        this.postTitle = postTitle;
-        this.postDate = postDate;
-        this.postCommentCount = postCommentCount;
-        this.postImageURL = postImageURL;
-    }
 
     public void setPostTitle(String postTitle) {
         this.postTitle = postTitle;

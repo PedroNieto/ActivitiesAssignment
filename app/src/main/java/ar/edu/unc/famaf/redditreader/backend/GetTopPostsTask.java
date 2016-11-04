@@ -11,13 +11,10 @@ import javax.net.ssl.HttpsURLConnection;
 
 import ar.edu.unc.famaf.redditreader.model.PostModel;
 import ar.edu.unc.famaf.redditreader.ui.OnTaskCompleted;
-import ar.edu.unc.famaf.redditreader.ui.PostAdapter;
 
-/**
- * Created by pedro on 25/10/16.
- */
 
-public class    GetTopPostsTask extends AsyncTask<URL, Integer, List<PostModel>>{
+
+class    GetTopPostsTask extends AsyncTask<URL, Integer, List<PostModel>>{
     private OnTaskCompleted listener;
 
     GetTopPostsTask(OnTaskCompleted listener){

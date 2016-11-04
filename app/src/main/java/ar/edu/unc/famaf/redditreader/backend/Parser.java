@@ -10,12 +10,9 @@ import java.util.List;
 
 import ar.edu.unc.famaf.redditreader.model.PostModel;
 
-/**
- * Created by pedro on 25/10/16.
- */
 
-public class Parser {
-    public List<PostModel> readJsonStream(InputStream in) throws IOException{
+class Parser {
+     List<PostModel> readJsonStream(InputStream in) throws IOException{
         ArrayList<PostModel> postList = null;
         JsonReader reader = new JsonReader(new InputStreamReader(in,"UTF-8"));
         reader.beginObject();
@@ -49,7 +46,7 @@ public class Parser {
     }
 
     private ArrayList<PostModel> readJsonChildren(JsonReader reader)throws IOException{
-        ArrayList<PostModel> postList = new ArrayList<PostModel>();
+        ArrayList<PostModel> postList = new ArrayList<>();
         reader.beginArray();
 
         while (reader.hasNext()){
@@ -79,34 +76,34 @@ public class Parser {
     }
 
     private PostModel getPostFromJsonData(JsonReader reader) throws IOException {
-        PostModel postModel;
-        String postSubReddit = null;
-        String postTitle = null;
-        int postDate = 0; //TODO
-        int postCommentCount = 0; //TODO
-        String postImageURL = null;
-
+        PostModel postModel = new PostModel();
 
         reader.beginObject();
 
         while (reader.hasNext()) {
             String name = reader.nextName();
-            if(name.equals("subreddit")){
-                postSubReddit = reader.nextString();
-            } else if (name.equals("title")){
-                postTitle = reader.nextString();
-            } else if (name.equals("created_utc")){
-                postDate = reader.nextInt();
-            } else if (name.equals("num_comments")){
-                postCommentCount = reader.nextInt();
-            } else if (name.equals("thumbnail")) {
-                postImageURL = reader.nextString();
-            } else {
-                reader.skipValue();
+            switch (name) {
+                case "subreddit":
+                    postModel.setPostSubReddit(reader.nextString());
+                    break;
+                case "title":
+                    postModel.setPostTitle(reader.nextString());
+                    break;
+                case "created_utc":
+                    postModel.setPostDate(reader.nextInt());
+                    break;
+                case "num_comments":
+                    postModel.setPostCommentCount(reader.nextInt());
+                    break;
+                case "thumbnail":
+                    postModel.setPostImageURL(reader.nextString());
+                    break;
+                default:
+                    reader.skipValue();
+                    break;
             }
         }
         reader.endObject();
-        postModel = new PostModel(postSubReddit, postTitle, postDate, postCommentCount, postImageURL);
 
         return postModel;
     }

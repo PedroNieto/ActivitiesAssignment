@@ -26,7 +26,9 @@
     <string name="time_of_post_seconds">Hace un momento</string>
     <string name="time_of_post_minutes">Hace %1$dmin</string>
     <string name="time_of_post_hours">Hace %1$dh</string>
-    <string name="time_of_post_days">Hace %1$d dias</string>
+    <string name="time_of_post_days">Hace %1$d días</string>
     <string name="time_of_post_more">Hace mucho tiempo</string>
 
+    <string name="error_message">Ha ocurrido un error</string>
+    <string name="success_login_message">El usuario %s se ha logueado</string>
 </resources>

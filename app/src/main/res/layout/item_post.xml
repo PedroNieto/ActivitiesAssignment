@@ -11,71 +11,9 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="5dp"
-        tools:ignore="ContentDescription"/>
-    <!--Textos del medio-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearLayout"
-        android:layout_alignTop="@+id/postImageView"
-        android:layout_toRightOf="@+id/postImageView"
-        android:layout_toEndOf="@+id/postImageView"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="4"
-            android:layout_height="wrap_content"
-            android:id="@+id/postSubRedditTextView"
-            android:textSize="18sp"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"
-            android:id="@+id/postDateTextView"
-            android:textSize="15sp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"/>
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/postTitleTextView"
-        android:textSize="20sp"
-        android:layout_below="@+id/linearLayout"
-        android:layout_toRightOf="@+id/postImageView"
-        android:layout_toEndOf="@+id/postImageView"
-        android:layout_marginEnd="25dp"
-        android:layout_marginRight="25dp"/>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/relativeLayout2"
-        android:layout_below="@+id/postTitleTextView"
-        android:layout_toRightOf="@+id/postImageView"
-        android:layout_toEndOf="@+id/postImageView">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/postCommentsCountTextView"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_toRightOf="@+id/commentsIcon"
-            android:layout_toEndOf="@+id/commentsIcon"/>
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_mode_comment"
-            android:background="?android:attr/selectableItemBackground"
-            android:id="@+id/commentsIcon"
-            tools:ignore="ContentDescription"/>
-    </RelativeLayout>
+        tools:ignore="ContentDescription"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp" />
 
     <ImageButton
         android:layout_width="50dp"
@@ -83,11 +21,10 @@
         android:src="@drawable/ic_chevron_right"
         android:background="?android:attr/selectableItemBackground"
         android:id="@+id/imageButton"
-        android:layout_alignTop="@+id/linearLayout"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="23dp"
-        tools:ignore="ContentDescription"/>
+        tools:ignore="ContentDescription"
+        android:layout_toRightOf="@+id/postTitleTextView"
+        android:layout_toEndOf="@+id/postTitleTextView"
+        android:layout_alignTop="@+id/postTitleTextView" />
 
     <ProgressBar
         android:id="@+id/progresBar"
@@ -110,4 +47,54 @@
         android:layout_marginRight="40dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="40dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/postSubRedditTextView"
+        android:textSize="13sp"
+        android:layout_alignTop="@+id/postImageView"
+        android:layout_toRightOf="@+id/postImageView"
+        android:layout_toEndOf="@+id/postImageView"
+        android:layout_marginBottom="3dp"
+        android:gravity="top|start" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/postDateTextView"
+        android:textSize="12sp"
+        android:gravity="bottom|end"
+        android:layout_alignRight="@+id/imageButton"
+        android:layout_alignEnd="@+id/imageButton"
+        android:layout_above="@+id/imageButton"
+        android:layout_marginBottom="3dp" />
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:id="@+id/postTitleTextView"
+        android:textSize="20sp"
+        android:layout_below="@+id/postSubRedditTextView"
+        android:layout_toRightOf="@+id/postImageView"
+        android:layout_toEndOf="@+id/postImageView"
+        android:layout_width="200dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/postCommentsCountTextView"
+        android:layout_below="@+id/postTitleTextView"
+        android:layout_alignRight="@+id/postTitleTextView"
+        android:layout_alignEnd="@+id/postTitleTextView" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_mode_comment"
+        android:background="?android:attr/selectableItemBackground"
+        android:id="@+id/commentsIcon"
+        tools:ignore="ContentDescription"
+        android:layout_below="@+id/postTitleTextView"
+        android:layout_alignLeft="@+id/postTitleTextView"
+        android:layout_alignStart="@+id/postTitleTextView" />
 </RelativeLayout>

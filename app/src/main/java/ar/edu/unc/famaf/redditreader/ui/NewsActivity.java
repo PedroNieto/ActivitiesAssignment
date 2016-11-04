@@ -1,5 +1,6 @@
 package ar.edu.unc.famaf.redditreader.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -20,7 +20,7 @@ import ar.edu.unc.famaf.redditreader.model.PostModel;
 public class NewsActivity extends AppCompatActivity implements OnTaskCompleted{
 
     private final int SIGN_IN_REQUEST_CODE = 0;
-    private PostAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,19 +50,20 @@ public class NewsActivity extends AppCompatActivity implements OnTaskCompleted{
         return super.onOptionsItemSelected(item);
     }
 
-/*No se si deberia borrar esto*/
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-/*        if (resultCode == Activity.RESULT_OK) {
-            if(requestCode == SIGN_IN_REQUEST_CODE){
-                String resultData = data.getExtras().getString(R.string.username_key);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == SIGN_IN_REQUEST_CODE) {
                 String resultData = data.getExtras().getString("username");
-                TextView textView = (TextView) findViewById(R.id.loginStatusTextView);
-                textView.setText("User " + resultData + " logged in");
- */           }
+                Toast.makeText(getApplicationContext(), getString(R.string.success_login_message, resultData), Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), R.string.error_message, Toast.LENGTH_LONG).show();
+        }
+    }
     public void onTaskCompleted(List<PostModel> result){
         if (result != null) {
-            this.adapter = new PostAdapter(this, R.layout.item_post, result);
+            PostAdapter adapter = new PostAdapter(this, R.layout.item_post, result);
             ListView postModelLV = (ListView) findViewById(R.id.post_list_view);
             postModelLV.setAdapter(adapter);
         }else{
