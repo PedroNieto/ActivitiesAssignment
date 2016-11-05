@@ -86,6 +86,7 @@ public class PostAdapter extends ArrayAdapter{
                         new ImageDownloader(viewHolder, position).execute(url);
                     }else{
                         viewHolder.postImageView.setImageBitmap(btm);
+                        viewHolder.progressBar.setVisibility(View.INVISIBLE);
                     }
 
                 }else{
