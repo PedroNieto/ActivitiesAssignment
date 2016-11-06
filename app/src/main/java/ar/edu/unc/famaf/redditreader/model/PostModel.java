@@ -7,6 +7,7 @@ public class PostModel {
     private int postDate;
     private int postCommentCount;
     private String postImageURL;
+    private String postID;
 
 
     public void setPostTitle(String postTitle) {
@@ -48,5 +49,13 @@ public class PostModel {
 
     public String getPostImageURL() {
         return postImageURL;
+    }
+
+    public String  getPostID() {
+        return postID;
+    }
+
+    public void setPostID(String postID) {
+        this.postID = postID;
     }
 }

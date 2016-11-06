@@ -1,11 +1,13 @@
 package ar.edu.unc.famaf.redditreader.ui;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,7 @@ import java.util.List;
 
 
 import ar.edu.unc.famaf.redditreader.R;
+import ar.edu.unc.famaf.redditreader.backend.RedditDBHelper;
 import ar.edu.unc.famaf.redditreader.model.PostModel;
 
 
@@ -33,7 +36,6 @@ public class PostAdapter extends ArrayAdapter{
     private static final int DAY_IN_SEC = 86400;
     private static final int MONTH_IN_SEC = 2592000;
     private List<PostModel> postLst;
-    private LruCache<Integer, Bitmap> cache = new LruCache<>(512);
 
 
     PostAdapter(Context context, int TextViewResourceId, List<PostModel> postLst){
@@ -52,6 +54,8 @@ public class PostAdapter extends ArrayAdapter{
     @Override
     @NonNull
     public View getView(int position, View convertView, @NonNull ViewGroup parent){
+        SQLiteDatabase db = new RedditDBHelper(getContext(),RedditDBHelper.POST_TABLE_VERSION).getWritableDatabase();
+        Cursor cursor;
         ViewHolder viewHolder;
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater) getContext().
@@ -78,26 +82,49 @@ public class PostAdapter extends ArrayAdapter{
             viewHolder.postTitleTextView.setText(postModel.getPostTitle());
             String commentsCount = getContext().getString(R.string.comments_amounts, postModel.getPostCommentCount());
             viewHolder.postCommentsCountTextView.setText(commentsCount);
-            try {
-                if (postModel.getPostImageURL().startsWith("http")) {
-                    url = new URL(postModel.getPostImageURL());
-                    Bitmap btm = cache.get(position);
-                    if ( btm == null){
-                        new ImageDownloader(viewHolder, position).execute(url);
-                    }else{
-                        viewHolder.postImageView.setImageBitmap(btm);
-                        viewHolder.progressBar.setVisibility(View.INVISIBLE);
-                    }
 
-                }else{
-                    viewHolder.postImageView.setImageResource(R.drawable.reddit);
-                    viewHolder.progressBar.setVisibility(View.INVISIBLE);
+            cursor = db.rawQuery("SELECT " + RedditDBHelper.POST_TABLE_THUMBNAIL + " FROM " +
+                    RedditDBHelper.POST_TABLE + " WHERE " + RedditDBHelper.POST_TABLE_REDDIT_ID +
+                    "=?",new String[] {postModel.getPostID()});
+
+            cursor.moveToFirst();
+            byte[] imageByte = cursor.getBlob(cursor.getColumnIndex(RedditDBHelper.POST_TABLE_THUMBNAIL));
+            if ( imageByte!=null){
+                viewHolder.progressBar.setVisibility(View.INVISIBLE);
+                viewHolder.postImageView.setImageBitmap(RedditDBHelper.getImage(imageByte));
+            }else{
+                String image_url = postModel.getPostImageURL();
+                switch (image_url){
+                    case "default":
+                        viewHolder.postImageView.setImageResource(R.drawable.default1);
+                        viewHolder.progressBar.setVisibility(View.INVISIBLE);
+                        break;
+                    case "nsfw":
+                        viewHolder.postImageView.setImageResource(R.drawable.nsfw);
+                        viewHolder.progressBar.setVisibility(View.INVISIBLE);
+                        break;
+                    case "self":
+                        viewHolder.postImageView.setImageResource(R.drawable.self);
+                        viewHolder.progressBar.setVisibility(View.INVISIBLE);
+                        break;
+                    case "image":
+                        viewHolder.postImageView.setImageResource(R.drawable.image);
+                        viewHolder.progressBar.setVisibility(View.INVISIBLE);
+                        break;
+                    default:
+                        try {
+                            url = new URL(postModel.getPostImageURL());
+                            new ImageDownloader(viewHolder, postModel.getPostID()).execute(url);
+
+                        }catch (MalformedURLException e){
+                            e.printStackTrace();
+                        }
+                        break;
                 }
 
-            }catch (MalformedURLException e){
-                e.printStackTrace();
             }
-
+            cursor.close();
+            db.close();
          }
         return convertView;
     }
@@ -141,10 +168,10 @@ public class PostAdapter extends ArrayAdapter{
     private class ImageDownloader extends AsyncTask<URL,Integer, Bitmap> {
 
         private ViewHolder viewHolder;
-        private int position;
-        ImageDownloader(ViewHolder viewHolder, int position){
+        private String postID;
+        ImageDownloader(ViewHolder viewHolder, String postID){
             this.viewHolder = viewHolder;
-            this.position = position;
+            this.postID = postID;
         }
         @Override
         protected void onPreExecute(){
@@ -171,9 +198,14 @@ public class PostAdapter extends ArrayAdapter{
         @Override
         protected void onPostExecute(Bitmap result) {
             if (result != null){
+                byte[] imageByte = RedditDBHelper.getBytes(result);
                 viewHolder.postImageView.setImageBitmap(result);
-                cache.put(position,result);
                 viewHolder.progressBar.setVisibility(View.INVISIBLE);
+                SQLiteDatabase db = new RedditDBHelper(getContext(),RedditDBHelper.POST_TABLE_VERSION).getWritableDatabase();
+                ContentValues values = new ContentValues();
+                values.put(RedditDBHelper.POST_TABLE_THUMBNAIL, imageByte);
+                db.update(RedditDBHelper.POST_TABLE, values,RedditDBHelper.POST_TABLE_REDDIT_ID + " = ?",new String[] {this.postID});
+                db.close();
             }
         }
 

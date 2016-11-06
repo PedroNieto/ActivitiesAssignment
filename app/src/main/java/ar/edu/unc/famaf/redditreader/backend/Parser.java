@@ -98,6 +98,9 @@ class Parser {
                 case "thumbnail":
                     postModel.setPostImageURL(reader.nextString());
                     break;
+                case "id":
+                    postModel.setPostID(reader.nextString());
+                    break;
                 default:
                     reader.skipValue();
                     break;
