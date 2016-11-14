@@ -13,15 +13,15 @@ import java.util.List;
 import javax.net.ssl.HttpsURLConnection;
 
 import ar.edu.unc.famaf.redditreader.model.PostModel;
-import ar.edu.unc.famaf.redditreader.ui.OnTaskCompleted;
-
+import ar.edu.unc.famaf.redditreader.ui.PostsIteratorListener;
 
 
 class    GetTopPostsTask extends AsyncTask<URL, Integer, List<PostModel>>{
     private Context context;
-
-    GetTopPostsTask(Context context){
+    private PostsIteratorListener postsIteratorListener;
+    GetTopPostsTask(Context context, PostsIteratorListener postsIteratorListener){
         this.context = context;
+        this.postsIteratorListener = postsIteratorListener;
     }
     @Override
     protected List<PostModel> doInBackground(URL... urls) {
@@ -42,7 +42,6 @@ class    GetTopPostsTask extends AsyncTask<URL, Integer, List<PostModel>>{
     @Override
     protected void onPostExecute(List<PostModel> postModels) {
         super.onPostExecute(postModels);
-        OnTaskCompleted onTaskCompleted =(OnTaskCompleted) context;
         RedditDBHelper redditDB = new RedditDBHelper(context, RedditDBHelper.POST_TABLE_VERSION);
         SQLiteDatabase db = redditDB.getWritableDatabase();
         db.delete(RedditDBHelper.POST_TABLE, null, null);
@@ -56,7 +55,6 @@ class    GetTopPostsTask extends AsyncTask<URL, Integer, List<PostModel>>{
             values.put(RedditDBHelper.POST_TABLE_REDDIT_ID, postModel.getPostID());
             db.insert(RedditDBHelper.POST_TABLE, null, values);
         }
-        onTaskCompleted.onTaskCompleted();
-
+        Backend.getInstance().getNextPosts(context,postsIteratorListener, 0, 0);
     }
 }

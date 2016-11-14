@@ -93,22 +93,27 @@ public class PostAdapter extends ArrayAdapter{
                 viewHolder.progressBar.setVisibility(View.INVISIBLE);
                 viewHolder.postImageView.setImageBitmap(RedditDBHelper.getImage(imageByte));
             }else{
+                viewHolder.postImageView.setVisibility(View.INVISIBLE);
                 String image_url = postModel.getPostImageURL();
                 switch (image_url){
                     case "default":
                         viewHolder.postImageView.setImageResource(R.drawable.default1);
+                        viewHolder.postImageView.setVisibility(View.VISIBLE);
                         viewHolder.progressBar.setVisibility(View.INVISIBLE);
                         break;
                     case "nsfw":
                         viewHolder.postImageView.setImageResource(R.drawable.nsfw);
+                        viewHolder.postImageView.setVisibility(View.VISIBLE);
                         viewHolder.progressBar.setVisibility(View.INVISIBLE);
                         break;
                     case "self":
                         viewHolder.postImageView.setImageResource(R.drawable.self);
+                        viewHolder.postImageView.setVisibility(View.VISIBLE);
                         viewHolder.progressBar.setVisibility(View.INVISIBLE);
                         break;
                     case "image":
                         viewHolder.postImageView.setImageResource(R.drawable.image);
+                        viewHolder.postImageView.setVisibility(View.VISIBLE);
                         viewHolder.progressBar.setVisibility(View.INVISIBLE);
                         break;
                     default:
@@ -200,6 +205,7 @@ public class PostAdapter extends ArrayAdapter{
             if (result != null){
                 byte[] imageByte = RedditDBHelper.getBytes(result);
                 viewHolder.postImageView.setImageBitmap(result);
+                viewHolder.postImageView.setVisibility(View.VISIBLE);
                 viewHolder.progressBar.setVisibility(View.INVISIBLE);
                 SQLiteDatabase db = new RedditDBHelper(getContext(),RedditDBHelper.POST_TABLE_VERSION).getWritableDatabase();
                 ContentValues values = new ContentValues();
