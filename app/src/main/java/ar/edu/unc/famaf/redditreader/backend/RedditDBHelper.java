@@ -22,9 +22,6 @@ public class RedditDBHelper extends SQLiteOpenHelper {
     public static final String POST_TABLE_THUMBNAIL_URL = "post_thumbnail_url";
     public static final String POST_TABLE_REDDIT_ID = "reddit_id";
 
-    public static String[] colums = {POST_TABLE_TITLE, POST_TABLE_SUBREDDIT,
-            POST_TABLE_DATE, POST_TABLE_COMMENTS_COUNT, POST_TABLE_THUMBNAIL_URL,
-            POST_TABLE_REDDIT_ID};
 
     public RedditDBHelper(Context context, int version){
         super(context, DATA_BASE_NAME, null, version);

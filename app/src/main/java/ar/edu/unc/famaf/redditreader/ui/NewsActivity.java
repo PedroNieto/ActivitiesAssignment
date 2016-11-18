@@ -8,30 +8,27 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 
 import ar.edu.unc.famaf.redditreader.R;
-import ar.edu.unc.famaf.redditreader.backend.Backend;
 
 public class NewsActivity extends AppCompatActivity {
 
     private final int SIGN_IN_REQUEST_CODE = 0;
-    public NetworkInfo networkInfo;
+    private NetworkInfo networkInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        networkInfo = cm.getActiveNetworkInfo();
 
-        setContentView(R.layout.activity_news);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        setContentView(R.layout.activity_news);
     }
 
 

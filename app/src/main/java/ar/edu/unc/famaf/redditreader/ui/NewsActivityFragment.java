@@ -18,8 +18,8 @@ import ar.edu.unc.famaf.redditreader.model.PostModel;
 public class NewsActivityFragment extends Fragment implements PostsIteratorListener {
     PostAdapter adapter;
     ListView postModelLV = null;
-    boolean firstuse = true;
     private List<PostModel> postModelList = new ArrayList<>();
+
     public NewsActivityFragment() {
     }
 
@@ -29,15 +29,17 @@ public class NewsActivityFragment extends Fragment implements PostsIteratorListe
         View view = inflater.inflate(R.layout.fragment_news, container, false);
 
         postModelLV = (ListView) view.findViewById(R.id.post_list_view);
+        adapter = new PostAdapter(getActivity(), R.layout.item_post, postModelList);
         final PostsIteratorListener postsIteratorListener = this;
         postModelLV.setOnScrollListener(new EndlessScrollListener(){
             @Override
             public boolean onLoadMore(int page, int totalItemsCount){
-                Backend.getInstance().getNextPosts(getActivity(),postsIteratorListener, page, totalItemsCount);
+                Backend.getInstance().getNextPosts(getContext(),postsIteratorListener, totalItemsCount);
                 return true;
             }
         });
-        Backend.getInstance().getTopPosts(getActivity(),this);
+        postModelLV.setAdapter(adapter);
+        Backend.getInstance().getTopPosts(getContext(),this);
 
         return view;
     }
@@ -45,14 +47,7 @@ public class NewsActivityFragment extends Fragment implements PostsIteratorListe
     @Override
     public void nextPosts(List<PostModel> posts) {
         if (posts != null) {
-            if (firstuse) {
-                postModelList.addAll(posts);
-                adapter = new PostAdapter(getContext(), R.layout.item_post, postModelList);
-                postModelLV.setAdapter(adapter);
-                firstuse = false;
-            } else {
-                postModelList.addAll(posts);
-            }
+            postModelList.addAll(posts);
             adapter.notifyDataSetChanged();
         }
     }

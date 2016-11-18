@@ -3,7 +3,6 @@ package ar.edu.unc.famaf.redditreader.backend;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import java.net.MalformedURLException;
@@ -12,12 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.edu.unc.famaf.redditreader.model.PostModel;
+import ar.edu.unc.famaf.redditreader.ui.NewsActivity;
 import ar.edu.unc.famaf.redditreader.ui.PostsIteratorListener;
 
 
 public class Backend {
+    private  static final int POST_MAX_COUNT = 50;
+    private  static final int PAGE_SIZE = 5;
     private static Backend ourInstance = new Backend();
-    private List<PostModel> postModelList = null;
+
     public static Backend getInstance() {
         return ourInstance;
     }
@@ -27,8 +29,7 @@ public class Backend {
 
     public void getTopPosts(Context context, PostsIteratorListener postsIteratorListener) {
         URL url;
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        NetworkInfo networkInfo = ((NewsActivity)context).getNeworkInfo();
         if(networkInfo != null && networkInfo.isConnected()) {
             try {
                 url = new URL("https://www.reddit.com/top/.json?limit=50");
@@ -38,7 +39,7 @@ public class Backend {
                 e.printStackTrace();
             }
         }else{
-            getNextPosts(context,postsIteratorListener, 0,0);
+            getNextPosts(context,postsIteratorListener,0);
         }
     }
     private List<PostModel> getPostFromCursor(Cursor cursor){
@@ -56,23 +57,17 @@ public class Backend {
             result.add(postModel);
             cursor.moveToNext();
         }
-        cursor.close();
         return result;
     }
-    public void getNextPosts(Context context, final PostsIteratorListener listener, int page, int totalItemCount) {
-        List<PostModel> resultList=null;
-        if (page == 0 && totalItemCount == 0) {
+    public void getNextPosts(Context context, final PostsIteratorListener listener, int totalItemCount) {
+        List<PostModel> resultList;
+        if(totalItemCount != POST_MAX_COUNT) {
             RedditDBHelper redditDB = new RedditDBHelper(context, RedditDBHelper.POST_TABLE_VERSION);
             SQLiteDatabase db = redditDB.getReadableDatabase();
-            Cursor cursor = db.query(RedditDBHelper.POST_TABLE, RedditDBHelper.colums, null, null, null, null, null);
-            postModelList = getPostFromCursor(cursor);
-            resultList = postModelList.subList((page) * 5, (page + 2) * 5);
-        }else {
-            if(totalItemCount != 50) {
-                resultList = postModelList.subList((page) * 5, (page + 1) * 5);
-            }
-        }
-        if(totalItemCount != 50) {
+            Cursor cursor = db.query(RedditDBHelper.POST_TABLE,null,null,null,null,null,null,totalItemCount + "," + PAGE_SIZE);
+            resultList = getPostFromCursor(cursor);
+            cursor.close();
+            db.close();
             listener.nextPosts(resultList);
         }
     }
