@@ -25,10 +25,9 @@ public class NewsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         networkInfo = cm.getActiveNetworkInfo();
-
+        setContentView(R.layout.activity_news);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setContentView(R.layout.activity_news);
     }
 
 

@@ -58,6 +58,7 @@ class    GetTopPostsTask extends AsyncTask<URL, Integer, List<PostModel>>{
                 values.put(RedditDBHelper.POST_TABLE_REDDIT_ID, postModel.getPostID());
                 db.insert(RedditDBHelper.POST_TABLE, null, values);
             }
+            db.close();
             Backend.getInstance().getNextPosts(context, postsIteratorListener, 0);
         }else {
             Toast.makeText(context, R.string.error_message, Toast.LENGTH_LONG).show();
