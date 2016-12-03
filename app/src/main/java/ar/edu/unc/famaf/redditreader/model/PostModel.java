@@ -1,14 +1,18 @@
 package ar.edu.unc.famaf.redditreader.model;
 
 
-public class PostModel {
+import java.io.Serializable;
+
+public class PostModel implements Serializable {
     private String postSubReddit;
     private String postTitle;
     private int postDate;
     private int postCommentCount;
     private String postImageURL;
     private String postID;
-
+    private String postLink;
+    private String postImgPreview;
+    private String postAuthor="a";
 
     public void setPostTitle(String postTitle) {
         this.postTitle = postTitle;
@@ -57,5 +61,29 @@ public class PostModel {
 
     public void setPostID(String postID) {
         this.postID = postID;
+    }
+
+    public String getPostLink() {
+        return postLink;
+    }
+
+    public void setPostLink(String postLink) {
+        this.postLink = postLink;
+    }
+
+    public String getPostImgPreview() {
+        return postImgPreview;
+    }
+
+    public void setPostImgPreview(String postImgPreview) {
+        this.postImgPreview = postImgPreview;
+    }
+
+    public String getPostAuthor() {
+        return postAuthor;
+    }
+
+    public void setPostAuthor(String postAuthor) {
+        this.postAuthor = postAuthor;
     }
 }

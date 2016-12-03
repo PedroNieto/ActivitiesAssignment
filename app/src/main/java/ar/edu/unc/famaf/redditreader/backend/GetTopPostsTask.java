@@ -21,6 +21,7 @@ import ar.edu.unc.famaf.redditreader.ui.PostsIteratorListener;
 class    GetTopPostsTask extends AsyncTask<URL, Integer, List<PostModel>>{
     private Context context;
     private PostsIteratorListener postsIteratorListener;
+
     GetTopPostsTask(Context context, PostsIteratorListener postsIteratorListener){
         this.context = context;
         this.postsIteratorListener = postsIteratorListener;
@@ -38,7 +39,6 @@ class    GetTopPostsTask extends AsyncTask<URL, Integer, List<PostModel>>{
             e.printStackTrace();
         }
         return list;
-
     }
 
     @Override
@@ -56,6 +56,9 @@ class    GetTopPostsTask extends AsyncTask<URL, Integer, List<PostModel>>{
                 values.put(RedditDBHelper.POST_TABLE_COMMENTS_COUNT, postModel.getPostCommentCount());
                 values.put(RedditDBHelper.POST_TABLE_THUMBNAIL_URL, postModel.getPostImageURL());
                 values.put(RedditDBHelper.POST_TABLE_REDDIT_ID, postModel.getPostID());
+                values.put(RedditDBHelper.POST_TABLE_AUTHOR, postModel.getPostAuthor());
+                values.put(RedditDBHelper.POST_TABLE_IMG_PREV_URL, postModel.getPostImgPreview());
+                values.put(RedditDBHelper.POST_TABLE_LINK, postModel.getPostLink());
                 db.insert(RedditDBHelper.POST_TABLE, null, values);
             }
             db.close();

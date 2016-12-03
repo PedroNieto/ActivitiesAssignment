@@ -54,6 +54,9 @@ public class Backend {
             postModel.setPostCommentCount(cursor.getInt(cursor.getColumnIndex(RedditDBHelper.POST_TABLE_COMMENTS_COUNT)));
             postModel.setPostImageURL(cursor.getString(cursor.getColumnIndex(RedditDBHelper.POST_TABLE_THUMBNAIL_URL)));
             postModel.setPostID(cursor.getString(cursor.getColumnIndex(RedditDBHelper.POST_TABLE_REDDIT_ID)));
+            postModel.setPostAuthor(cursor.getString(cursor.getColumnIndex(RedditDBHelper.POST_TABLE_AUTHOR)));
+            postModel.setPostLink(cursor.getString(cursor.getColumnIndex(RedditDBHelper.POST_TABLE_LINK)));
+            postModel.setPostImgPreview(cursor.getString(cursor.getColumnIndex(RedditDBHelper.POST_TABLE_IMG_PREV_URL)));
             result.add(postModel);
             cursor.moveToNext();
         }

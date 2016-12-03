@@ -101,6 +101,15 @@ class Parser {
                 case "id":
                     postModel.setPostID(reader.nextString());
                     break;
+                case "url":
+                    postModel.setPostLink(reader.nextString());
+                    break;
+                case "author":
+                    postModel.setPostAuthor(reader.nextString());
+                    break;
+                case "preview":
+                    postModel.setPostImgPreview(parseJsonPreview(reader));
+                    break;
                 default:
                     reader.skipValue();
                     break;
@@ -109,6 +118,61 @@ class Parser {
         reader.endObject();
 
         return postModel;
+    }
+
+    private String parseJsonPreview(JsonReader reader) throws IOException{
+        String result = null;
+        reader.beginObject();
+        while (reader.hasNext()) {
+            String name = reader.nextName();
+            if (name.equals("images")) {
+                result = parseJsonImages(reader);
+            } else {
+                    reader.skipValue();
+            }
+        }
+        reader.endObject();
+        return result;
+    }
+
+    private String parseJsonImages(JsonReader reader) throws IOException{
+        String result = null;
+        reader.beginArray();
+        while (reader.hasNext()) {
+            result = parseJsonImagesData(reader);
+        }
+        reader.endArray();
+        return result;
+    }
+
+    private String parseJsonImagesData(JsonReader reader) throws IOException {
+        String result = null;
+        reader.beginObject();
+        while(reader.hasNext()){
+            String name = reader.nextName();
+            if (name.equals("source")) {
+                result = parseJsonGetUrl(reader);
+            } else {
+                reader.skipValue();
+            }
+        }
+        reader.endObject();
+        return result;
+    }
+
+    private String parseJsonGetUrl(JsonReader reader) throws IOException {
+        String result = null;
+        reader.beginObject();
+        while (reader.hasNext()){
+            String name = reader.nextName();
+            if (name.equals("url")) {
+                result = reader.nextString();
+            } else {
+                reader.skipValue();
+            }
+        }
+        reader.endObject();
+        return result;
     }
 }
 

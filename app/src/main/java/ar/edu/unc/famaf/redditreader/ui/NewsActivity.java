@@ -15,8 +15,9 @@ import android.widget.Toast;
 
 
 import ar.edu.unc.famaf.redditreader.R;
+import ar.edu.unc.famaf.redditreader.model.PostModel;
 
-public class NewsActivity extends AppCompatActivity {
+public class NewsActivity extends AppCompatActivity implements OnPostItemSelectedListener {
 
     private final int SIGN_IN_REQUEST_CODE = 0;
     private NetworkInfo networkInfo;
@@ -63,6 +64,14 @@ public class NewsActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onPostItemPicked(PostModel post){
+        //TODO llamar a DtailActivity
+        Intent intent = new Intent(this, NewsDetailActivity.class);
+        String POST_DETAIL_TAG = "detail_post_tag";
+        intent.putExtra(POST_DETAIL_TAG, post);
+        startActivity(intent);
+    }
 
     public NetworkInfo getNeworkInfo() {
         return networkInfo;

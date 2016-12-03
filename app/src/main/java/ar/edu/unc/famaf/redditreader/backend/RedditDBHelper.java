@@ -11,8 +11,8 @@ import java.io.ByteArrayOutputStream;
 
 public class RedditDBHelper extends SQLiteOpenHelper {
 
-    private static final String DATA_BASE_NAME = "db01.db";
-    public static final int POST_TABLE_VERSION = 1;
+    private static final String DATA_BASE_NAME = "db03.db";
+    public static final int POST_TABLE_VERSION = 3;
     public static final String POST_TABLE = "post";
     public static final String POST_TABLE_TITLE = "post_title";
     public static final String POST_TABLE_SUBREDDIT = "post_subreddit";
@@ -21,6 +21,10 @@ public class RedditDBHelper extends SQLiteOpenHelper {
     public static final String POST_TABLE_THUMBNAIL = "post_thumbnail";
     public static final String POST_TABLE_THUMBNAIL_URL = "post_thumbnail_url";
     public static final String POST_TABLE_REDDIT_ID = "reddit_id";
+    public static final String POST_TABLE_AUTHOR = "post_author";
+    public static final String POST_TABLE_LINK = "post_link";
+    public static final String POST_TABLE_IMG_PREV = "post_img_prev";
+    public static final String POST_TABLE_IMG_PREV_URL = "post_img_prev_url";
 
 
     public RedditDBHelper(Context context, int version){
@@ -36,6 +40,10 @@ public class RedditDBHelper extends SQLiteOpenHelper {
                 + POST_TABLE_DATE+ " integer not null,"
                 + POST_TABLE_COMMENTS_COUNT+ " integer not null,"
                 + POST_TABLE_THUMBNAIL_URL+ " text not null,"
+                + POST_TABLE_AUTHOR+ " text not null,"
+                + POST_TABLE_LINK+ " text,"
+                + POST_TABLE_IMG_PREV_URL+ " text,"
+                + POST_TABLE_IMG_PREV+ " blob,"
                 + POST_TABLE_THUMBNAIL+ " blob);";
         db.execSQL(createSentence);
     }
