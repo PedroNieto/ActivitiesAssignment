@@ -1,9 +1,6 @@
 package ar.edu.unc.famaf.redditreader.ui;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -25,6 +22,7 @@ import java.util.List;
 
 
 import ar.edu.unc.famaf.redditreader.R;
+import ar.edu.unc.famaf.redditreader.backend.Backend;
 import ar.edu.unc.famaf.redditreader.backend.RedditDBHelper;
 import ar.edu.unc.famaf.redditreader.model.PostModel;
 
@@ -36,11 +34,12 @@ public class PostAdapter extends ArrayAdapter{
     private static final int DAY_IN_SEC = 86400;
     private static final int MONTH_IN_SEC = 2592000;
     private List<PostModel> postLst;
+    private Backend backend;
 
-
-    PostAdapter(Context context, int TextViewResourceId, List<PostModel> postLst){
+    PostAdapter(Context context, int TextViewResourceId, List<PostModel> postLst, Backend backend){
         super(context,TextViewResourceId);
         this.postLst = postLst;
+        this.backend = backend;
     }
     @Override
     public int getCount(){
@@ -54,8 +53,7 @@ public class PostAdapter extends ArrayAdapter{
     @Override
     @NonNull
     public View getView(int position, View convertView, @NonNull ViewGroup parent){
-        SQLiteDatabase db = new RedditDBHelper(getContext(),RedditDBHelper.POST_TABLE_VERSION).getWritableDatabase();
-        Cursor cursor;
+
         ViewHolder viewHolder;
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater) getContext().
@@ -83,12 +81,7 @@ public class PostAdapter extends ArrayAdapter{
             String commentsCount = getContext().getString(R.string.comments_amounts, postModel.getPostCommentCount());
             viewHolder.postCommentsCountTextView.setText(commentsCount);
 
-            cursor = db.rawQuery("SELECT " + RedditDBHelper.POST_TABLE_THUMBNAIL + " FROM " +
-                    RedditDBHelper.POST_TABLE + " WHERE " + RedditDBHelper.POST_TABLE_REDDIT_ID +
-                    "=?",new String[] {postModel.getPostID()});
-
-            cursor.moveToFirst();
-            byte[] imageByte = cursor.getBlob(cursor.getColumnIndex(RedditDBHelper.POST_TABLE_THUMBNAIL));
+            byte[] imageByte = backend.getImageOfPost(postModel.getPostID());
             if ( imageByte!=null){
                 viewHolder.progressBar.setVisibility(View.INVISIBLE);
                 viewHolder.postImageView.setImageBitmap(RedditDBHelper.getImage(imageByte));
@@ -126,10 +119,7 @@ public class PostAdapter extends ArrayAdapter{
                         }
                         break;
                 }
-
             }
-            cursor.close();
-            db.close();
          }
         return convertView;
     }
@@ -207,11 +197,7 @@ public class PostAdapter extends ArrayAdapter{
                 viewHolder.postImageView.setImageBitmap(result);
                 viewHolder.postImageView.setVisibility(View.VISIBLE);
                 viewHolder.progressBar.setVisibility(View.INVISIBLE);
-                SQLiteDatabase db = new RedditDBHelper(getContext(),RedditDBHelper.POST_TABLE_VERSION).getWritableDatabase();
-                ContentValues values = new ContentValues();
-                values.put(RedditDBHelper.POST_TABLE_THUMBNAIL, imageByte);
-                db.update(RedditDBHelper.POST_TABLE, values,RedditDBHelper.POST_TABLE_REDDIT_ID + " = ?",new String[] {this.postID});
-                db.close();
+                backend.updateDBThumbnail(imageByte, postID);
             }
         }
 

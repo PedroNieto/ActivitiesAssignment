@@ -21,10 +21,12 @@ import ar.edu.unc.famaf.redditreader.ui.PostsIteratorListener;
 class    GetTopPostsTask extends AsyncTask<URL, Integer, List<PostModel>>{
     private Context context;
     private PostsIteratorListener postsIteratorListener;
+    private Backend backend;
 
-    GetTopPostsTask(Context context, PostsIteratorListener postsIteratorListener){
+    GetTopPostsTask(Context context, PostsIteratorListener postsIteratorListener, Backend backend){
         this.context = context;
         this.postsIteratorListener = postsIteratorListener;
+        this.backend = backend;
     }
     @Override
     protected List<PostModel> doInBackground(URL... urls) {
@@ -47,7 +49,7 @@ class    GetTopPostsTask extends AsyncTask<URL, Integer, List<PostModel>>{
         if (postModels != null) {
             RedditDBHelper redditDB = new RedditDBHelper(context, RedditDBHelper.POST_TABLE_VERSION);
             SQLiteDatabase db = redditDB.getWritableDatabase();
-            db.delete(RedditDBHelper.POST_TABLE, null, null);
+            db.delete(this.backend.getTableName(), null, null);
             ContentValues values = new ContentValues();
             for (PostModel postModel : postModels) {
                 values.put(RedditDBHelper.POST_TABLE_TITLE, postModel.getPostTitle());
@@ -59,7 +61,7 @@ class    GetTopPostsTask extends AsyncTask<URL, Integer, List<PostModel>>{
                 values.put(RedditDBHelper.POST_TABLE_AUTHOR, postModel.getPostAuthor());
                 values.put(RedditDBHelper.POST_TABLE_IMG_PREV_URL, postModel.getPostImgPreview());
                 values.put(RedditDBHelper.POST_TABLE_LINK, postModel.getPostLink());
-                db.insert(RedditDBHelper.POST_TABLE, null, values);
+                db.insert(this.backend.getTableName(), null, values);
             }
             db.close();
             Backend.getInstance().getNextPosts(context, postsIteratorListener, 0);

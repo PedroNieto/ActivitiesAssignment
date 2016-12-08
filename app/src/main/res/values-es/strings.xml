@@ -3,7 +3,6 @@
 
     <!-- Strings related to login -->
     <string name="prompt_email">Correo Electronico</string>
-    <!--TODO-->
     <string name="prompt_password">Contrasenia(opcional)</string>
     <string name="action_sign_in">Inicia Sesion o Registrate</string>
     <string name="action_sign_in_short">Inicia Sesion</string>

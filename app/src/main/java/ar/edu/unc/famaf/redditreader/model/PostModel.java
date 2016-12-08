@@ -6,20 +6,40 @@ import java.io.Serializable;
 public class PostModel implements Serializable {
     private String postSubReddit;
     private String postTitle;
-    private int postDate;
-    private int postCommentCount;
     private String postImageURL;
     private String postID;
     private String postLink;
     private String postImgPreview;
-    private String postAuthor="a";
+    private String postAuthor;
+    private int postDate;
+    private int postCommentCount;
+
+    public void setPostSubReddit(String postSubReddit) {
+        this.postSubReddit = postSubReddit;
+    }
 
     public void setPostTitle(String postTitle) {
         this.postTitle = postTitle;
     }
 
-    public void setPostSubReddit(String postSubReddit) {
-        this.postSubReddit = postSubReddit;
+    public void setPostImageURL(String postImageURL) {
+        this.postImageURL = postImageURL;
+    }
+
+    public void setPostID(String postID) {
+        this.postID = postID;
+    }
+
+    public void setPostLink(String postLink) {
+        this.postLink = postLink;
+    }
+
+    public void setPostImgPreview(String postImgPreview) {
+        this.postImgPreview = postImgPreview;
+    }
+
+    public void setPostAuthor(String postAuthor) {
+        this.postAuthor = postAuthor;
     }
 
     public void setPostDate(int postDate) {
@@ -30,25 +50,12 @@ public class PostModel implements Serializable {
         this.postCommentCount = postCommentCount;
     }
 
-    public void setPostImageURL(String postImageURL) {
-        this.postImageURL = postImageURL;
-    }
-
-    public String getPostTitle() {
-        return postTitle;
-    }
-
     public String getPostSubReddit() {
         return postSubReddit;
     }
 
-
-    public int getPostDate() {
-        return postDate;
-    }
-
-    public int getPostCommentCount() {
-        return postCommentCount;
+    public String getPostTitle() {
+        return postTitle;
     }
 
     public String getPostImageURL() {
@@ -59,31 +66,24 @@ public class PostModel implements Serializable {
         return postID;
     }
 
-    public void setPostID(String postID) {
-        this.postID = postID;
-    }
-
     public String getPostLink() {
         return postLink;
-    }
-
-    public void setPostLink(String postLink) {
-        this.postLink = postLink;
     }
 
     public String getPostImgPreview() {
         return postImgPreview;
     }
 
-    public void setPostImgPreview(String postImgPreview) {
-        this.postImgPreview = postImgPreview;
-    }
-
     public String getPostAuthor() {
         return postAuthor;
     }
 
-    public void setPostAuthor(String postAuthor) {
-        this.postAuthor = postAuthor;
+    public int getPostDate() {
+        return postDate;
     }
+
+    public int getPostCommentCount() {
+        return postCommentCount;
+    }
+
 }

@@ -20,8 +20,9 @@ import ar.edu.unc.famaf.redditreader.model.PostModel;
 public class NewsActivityFragment extends Fragment implements PostsIteratorListener {
     PostAdapter adapter;
     ListView postModelLV = null;
-    private List<PostModel> postModelList = new ArrayList<>();
+    List<PostModel> postModelList = new ArrayList<>();
     OnPostItemSelectedListener mCallback;
+    private Backend backend;
 
     public NewsActivityFragment() {
     }
@@ -30,27 +31,35 @@ public class NewsActivityFragment extends Fragment implements PostsIteratorListe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_news, container, false);
-
+        backend = Backend.getInstance();
         postModelLV = (ListView) view.findViewById(R.id.post_list_view);
-        adapter = new PostAdapter(getActivity(), R.layout.item_post, postModelList);
+        adapter = new PostAdapter(getActivity(), R.layout.item_post, postModelList,backend);
         final PostsIteratorListener postsIteratorListener = this;
         postModelLV.setOnScrollListener(new EndlessScrollListener(){
             @Override
             public boolean onLoadMore(int page, int totalItemsCount){
-                Backend.getInstance().getNextPosts(getContext(),postsIteratorListener, totalItemsCount);
+                backend.getNextPosts(getContext(),postsIteratorListener, totalItemsCount);
                 return true;
             }
         });
+
         postModelLV.setAdapter(adapter);
         postModelLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO llamar a metodo de la interface
                 mCallback.onPostItemPicked(adapter.getItem(position));
             }
         });
-        Backend.getInstance().getTopPosts(getContext(),this);
-
+        int menuItemID = ((NewsActivity)getActivity()).getMenuItemID();
+        if (menuItemID == R.id.nav_hot) {
+            backend.getHotPosts(getContext(), this);
+        } else if (menuItemID == R.id.nav_top) {
+            backend.getTopPosts(getContext(), this);
+        }else if (menuItemID == R.id.nav_new) {
+            backend.getNewPosts(getContext(), this);
+        } else {
+            backend.getHotPosts(getContext(), this);
+        }
         return view;
     }
 
@@ -70,5 +79,12 @@ public class NewsActivityFragment extends Fragment implements PostsIteratorListe
             postModelList.addAll(posts);
             adapter.notifyDataSetChanged();
         }
+    }
+    public void cleanData(){
+        postModelList.clear();
+        adapter.notifyDataSetChanged();
+    }
+    public Backend getBackend(){
+        return backend;
     }
 }
